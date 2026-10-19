@@ -70,6 +70,10 @@
 
 <img width="1920" height="1080" alt="알림, 설정" src="https://github.com/user-attachments/assets/1a41693d-5fa2-498d-9ad4-62d971f85545" />
 
+### 1-5. 완성된 하드웨어
+<img width="505" height="458" alt="최종_하드웨어" src="https://github.com/user-attachments/assets/0197fd9d-d47f-45fd-9896-032f1880f3f7" />
+
+
 
 
 <br />
@@ -171,7 +175,7 @@
 ## **💡3. 시스템 구성도**
 
 ### 전체 구조
-<img width="2136" height="1221" alt="작품구성도" src="https://github.com/user-attachments/assets/02dd765c-7f99-4729-9b17-3cc69c681fcf" />
+<img width="2136" height="1221" alt="구조도" src="https://github.com/user-attachments/assets/d49145f8-46b3-4312-923a-92c3ff6f79a5" />
 
 
 
