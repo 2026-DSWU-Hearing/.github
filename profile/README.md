@@ -1,15 +1,16 @@
-# Hear:ing <img src="https://raw.githubusercontent.com/2026-DSWU-Hearing/.github/main/profile/assets/logo.png" width="110" align="left" />
-청각장애인을 위한 AI 기반 웨어러블 실시간 소리 알림 서비스
+# Hearing <img src="https://raw.githubusercontent.com/2026-DSWU-Hearing/.github/main/profile/assets/logo.png" width="110" align="left" />
+청각장애인을 위한 AI 웨어러블 보조 서비스
 
 <br />
 
 ## **💡1. 프로젝트 개요**
 
 ### 1-1. 프로젝트 소개
-- 프로젝트 명 : 청각장애인을 위한 AI 기반 웨어러블 실시간 소리 알림 서비스 **Hear:ing**
+- 프로젝트 명 : 청각장애인을 위한 AI 기반 웨어러블 디바이스와 웹앱 연계 보조 서비스, 히어링(Hearing)
+
 - 프로젝트 정의 : 넥밴드형 웨어러블이 주변 소리를 듣고, AI가 **무슨 소리인지**를, 하드웨어가 **어디서 나는지**를 판별해, 사용자가 모드별로 골라 둔 소리만 진동과 웹앱 알림으로 전달하는 실시간 소리 알림 서비스
 
-<img alt="Hear:ing 서비스 소개" src="https://raw.githubusercontent.com/2026-DSWU-Hearing/.github/main/profile/assets/hero.png" /></br>
+<img width="1200" height="630" alt="og-image" src="https://github.com/user-attachments/assets/cafe9027-5ab9-4585-867e-9f9b6fad1816" /></br>
 
 <br />
 
@@ -42,21 +43,34 @@
 <br />
 
 ### 1-4. 주요 기능
-- **실시간 소리 감지·전송(H/W)** : I2S 마이크 3개로 16kHz PCM을 수집하고, 에너지 임계값을 넘으면 0.5초 단위로 AI 서버에 스트리밍
+- **로그인/온보딩(FE/BE)** : Google 로그인과 게스트 로그인, 장애 유형·닉네임·약관·기기 연결로 이어지는 온보딩 흐름
+- **기기 연결(FE/BE)** : "연결하기" 한 번으로 하드웨어 접속 여부를 즉시 확인(미접속이면 409)하고 활성 사용자를 전환, 기기 이름은 계정별로 따로 저장
+- **모드 관리(FE/BE)** : 모드 최대 6개, 1개만 활성. 모드별 소리 목록 교체와 개별 소리 on/off 지원
+- **알림 이력(FE/BE)** : `(detected_at, id)` 커서 기반 무한 스크롤, 일괄 삭제(멱등), 실시간 수신분과 조회분을 동일 스키마로 통합
+- **양방향 소통 화면(FE)** : 대면 상황에서 대화를 주고받는 화면
+- **실시간 소리 감지(FE/BE)** : 웨어러블 없이도 휴대폰 마이크로 주변 소리를 분석해 감지 결과를 실시간으로 확인
+- **소리 감지·전송(H/W)** : I2S 마이크 3개로 16kHz PCM을 수집하고, 에너지 임계값을 넘으면 0.5초 단위로 AI 서버에 스트리밍
 - **소리 방향 추정(H/W)** : 마이크 쌍별 상호상관 피크(서브샘플 포물선 보간)로 TDOA를 구하고, 1초 창의 다수결 투표로 FRONT/BACK/LEFT/RIGHT 판정
 - **방향 진동 피드백(H/W)** : 백엔드의 vibrate 명령을 받아 해당 방향 모터를 구동, 배터리 전압 보정으로 잔량과 무관하게 일정한 세기 유지
 - **AI 소리 분류(AI)** : Google YAMNet으로 521개 AudioSet 클래스를 추론하고, 서비스 한글 카테고리(긴급·교통·사람·생활음·자연·동물·주방·음악)로 매핑해 상위 3개 반환
 - **최종 알림 판단(BE)** : 감지 결과를 기기의 **활성 사용자**에게 라우팅 → 방해금지 확인 → 활성 모드·소리별 on/off 매칭 → 알림 저장 → 푸시·인앱·진동 팬아웃 (매칭 실패 시 아무것도 남기지 않음)
-- **모드 관리(FE/BE)** : 모드 최대 6개, 1개만 활성. 모드별 소리 목록 교체와 개별 소리 on/off 지원
-- **알림 이력(FE/BE)** : `(detected_at, id)` 커서 기반 무한 스크롤, 일괄 삭제(멱등), 실시간 수신분과 조회분을 동일 스키마로 통합
-- **기기 연결(FE/BE)** : "연결하기" 한 번으로 하드웨어 접속 여부를 즉시 확인(미접속이면 409)하고 활성 사용자를 전환, 기기 이름은 계정별로 따로 저장
-- **라이브 사운드(FE/BE)** : 웨어러블 없이도 휴대폰 마이크로 주변 소리를 분석해 감지 결과를 실시간으로 확인
-- **로그인/온보딩(FE/BE)** : Google 로그인과 게스트 로그인, 장애 유형·닉네임·약관·기기 연결로 이어지는 온보딩 흐름
-- **양방향 소통 화면(FE)** : 대면 상황에서 대화를 주고받는 화면
 
-<img alt="소리 필터링 기능" src="https://raw.githubusercontent.com/2026-DSWU-Hearing/.github/main/profile/assets/feature-sound-filtering.png" />
 
-<img alt="실시간 소리 감지 기능" src="https://raw.githubusercontent.com/2026-DSWU-Hearing/.github/main/profile/assets/feature-live-sound.png" />
+<img width="1920" height="1080" alt="로그인 및 온보딩" src="https://github.com/user-attachments/assets/2da097df-4608-4dea-b07a-6d7a29e28931" />
+
+<img width="1920" height="1080" alt="하드웨어 연결" src="https://github.com/user-attachments/assets/2922efc1-4225-472c-97a1-a4e5ad6c3643" />
+
+<img width="1920" height="1080" alt="소리 필터링 기능" src="https://github.com/user-attachments/assets/5ff62671-5e9e-48b8-acbc-099ed7cd9d8c" />
+
+<img width="1920" height="1080" alt="모드 설정" src="https://github.com/user-attachments/assets/02a479ef-ee97-481c-bfcb-eb0685625121" />
+
+<img width="1920" height="1080" alt="양방향 소통" src="https://github.com/user-attachments/assets/04f1c688-df1f-4fdc-982b-673051d873c4" />
+
+<img width="1920" height="1080" alt="실시간 소리 감지" src="https://github.com/user-attachments/assets/fe74fd9e-d1d7-4ae7-879e-a5bdd89a32f3" />
+
+<img width="1920" height="1080" alt="알림, 설정" src="https://github.com/user-attachments/assets/1a41693d-5fa2-498d-9ad4-62d971f85545" />
+
+
 
 <br />
 
@@ -149,74 +163,23 @@
 | [<img src="https://github.com/lycheelove.png" width="150px">](https://github.com/lycheelove) | [<img src="https://github.com/chubin925.png" width="150px">](https://github.com/chubin925) | [<img src="https://github.com/chokimilk01.png" width="150px">](https://github.com/chokimilk01) | [<img src="https://github.com/uga001.png" width="150px">](https://github.com/uga001) | [<img src="https://github.com/ysysys03.png" width="150px">](https://github.com/ysysys03) |
 |:---:|:---:|:---:|:---:|:---:|
 | [김시연](https://github.com/lycheelove) | [양수빈](https://github.com/chubin925) | [김서현](https://github.com/chokimilk01) | [유선영](https://github.com/uga001) | [최예소](https://github.com/ysysys03) |
-| • 팀장 <br> • 프론트엔드 | • 프론트엔드 | • 백엔드 | • 하드웨어 | • AI |
+| • 팀장 <br> • 프론트엔드 | • 프론트엔드 | • 백엔드 | • 하드웨어 | • AI <br> • 3d 모델링 |
 
-## 🖼️ 단체 사진
 
-<!-- ⬇️ 이미지 자리 2 : 단체 사진 (Notion "깃허브 리드미 작성" 페이지)
-![단체 사진](이미지-URL)
--->
 
 ---
 ## **💡3. 시스템 구성도**
 
 ### 전체 구조
+<img width="2136" height="1221" alt="작품구성도" src="https://github.com/user-attachments/assets/02dd765c-7f99-4729-9b17-3cc69c681fcf" />
 
-```mermaid
-flowchart LR
-    subgraph HW["웨어러블 · ESP32-S3"]
-        MIC["I2S 마이크 3개<br/>좌 · 우 · 후면"]
-        DIR["방향 추정<br/>TDOA 상호상관 + 다수결"]
-        MOT["진동 모터 3개<br/>좌 · 우 · 후면"]
-        MIC --> DIR
-    end
 
-    subgraph AI["AI 서버 · HEARING-MODEL"]
-        YAM["YAMNet 추론<br/>521 클래스"]
-        MAP["한글 카테고리 매핑<br/>상위 3개 선별"]
-        YAM --> MAP
-    end
-
-    subgraph BE["백엔드 · HEARING-BE"]
-        JUDGE["최종 알림 판단<br/>방해금지 · 활성 모드 · 소리 on/off"]
-        DB[("PostgreSQL<br/>Redis")]
-        JUDGE --- DB
-    end
-
-    subgraph FE["웹앱 · HEARING-FE"]
-        PWA["React PWA<br/>모드 · 알림 · 기기 설정"]
-    end
-
-    DIR -- "WS 바이너리<br/>방향 1B + PCM int16" --> YAM
-    MAP -- "POST /devices/:id/detections" --> JUDGE
-    JUDGE -- "WS vibrate 명령" --> MOT
-    JUDGE -- "FCM 데이터 푸시 + WS 인앱 알림" --> PWA
-    PWA -- "REST" --> JUDGE
-```
 
 ### 소리 감지 → 알림 흐름
+<img width="800" alt="hearing_feature_map_sequential" src="https://github.com/user-attachments/assets/7410183a-0ec2-43b5-90ab-e6b9a5f69e78" />
 
-```mermaid
-sequenceDiagram
-    participant HW as 웨어러블
-    participant AI as AI 서버
-    participant BE as 백엔드
-    participant FE as 웹앱
+<img width="800" alt="hearing_updated_communication_flow (1)" src="https://github.com/user-attachments/assets/9ee6d255-6941-4102-819f-a5c845d48350" />
 
-    HW->>HW: 임계값 초과 감지 + 방향 판정
-    HW->>AI: 오디오 패킷 (방향 + PCM 0.5초)
-    AI->>AI: YAMNet 추론 → 한글 카테고리 매핑
-    AI->>BE: 감지 결과 (카테고리 · 이름 · 신뢰도 · 방향)
-    BE->>BE: 활성 사용자 확인
-    alt 방해금지 ON 또는 활성 모드 미매칭
-        BE-->>BE: 저장·알림 없이 종료
-    else 매칭 성공
-        BE->>BE: 알림 저장
-        BE->>FE: FCM 푸시 + 인앱 WebSocket 알림
-        BE->>HW: vibrate 명령 (방향 + 사용자 진동 세기)
-        HW->>HW: 해당 방향 모터 진동
-    end
-```
 
 ### 하드웨어 구성
 
@@ -234,11 +197,12 @@ sequenceDiagram
 
 <br />
 
-## **💡4. 작품 소개영상**
 
-<!-- ⬇️ 링크 자리 : 소개 영상 업로드 후 아래 줄의 주석을 풀고 URL 교체
-### 🔗[Hear:ing 프로젝트 소개 영상 보러가기](영상-URL)
--->
+## 🎬 4. 작품 소개영상
+
+[![Hearing 작품 소개영상](https://img.youtube.com/vi/70gypPYGwiA/hqdefault.jpg)](https://youtu.be/70gypPYGwiA)
+
+
 
 <br />
 
